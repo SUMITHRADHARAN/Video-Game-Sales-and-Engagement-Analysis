@@ -261,25 +261,19 @@ Code:
 
 import pandas as pd 
 
-  
-
-# Load dataframes (path adjusted for clarity) 
+Load dataframes (path adjusted for clarity) 
 
 df = pd.read_csv('games.csv') 
 
 sales_df = pd.read_csv('vgsales.csv') 
 
-  
-
-# Handle missing categorical values in sales data 
+Handle missing categorical values in sales data 
 
 sales_df['Year'] = sales_df['Year'].fillna('Unknown') 
 
 sales_df['Publisher'] = sales_df['Publisher'].fillna('Unknown') 
 
-  
-
-# Ensure sales columns are numeric and fill NaNs with 0.0 
+Ensure sales columns are numeric and fill NaNs with 0.0 
 
 sales_cols = ['NA_Sales', 'EU_Sales', 'JP_Sales', 'Other_Sales', 'Global_Sales'] 
 
@@ -295,13 +289,13 @@ The code snippet focuses on merging via how='inner', keeping only games present 
 
 Code: 
 
-# Standardize key column name before merging 
+Standardize key column name before merging 
 
 sales_df.rename(columns={'Name': 'Title'}, inplace=True) 
 
-# 'how=inner' keeps games found in BOTH datasets 
+'how=inner' keeps games found in BOTH datasets 
 
-# Note: For robust de-duplication across platforms/years, .drop_duplicates() would be used on the resulting merged_df 
+Note: For robust de-duplication across platforms/years, .drop_duplicates() would be used on the resulting merged_df 
 
 merged_df = pd.merge(df, sales_df, on='Title', how='inner') 
 
@@ -351,15 +345,11 @@ Code:
 
 df['Release Date'] = pd.to_datetime(df['Release Date'], errors='coerce').dt.strftime('%Y-%m-%d') 
 
-# Numeric Formatting (K-format conversion) 
+Numeric Formatting (K-format conversion) 
 
-cols_to_clean = ['Plays', 'Playing', 'Backlogs', 'Wishlist', 'Number of Reviews', 'Times Listed'] for col in cols_to_clean: if col in df.columns: df[col] = df[col].apply(clean_k_format) 
-
-.apply(clean_k_format) 
-
- 
-
- 
+cols_to_clean = ['Plays', 'Playing', 'Backlogs', 'Wishlist', 'Number of Reviews', 'Times Listed'] 
+for col in cols_to_clean: if col in df.columns: 
+    df[col] = df[col].apply(clean_k_format) .apply(clean_k_format) 
 
 ✅ Result: All text, date, and numeric columns followed a unified format across the merged dataset, allowing smooth analysis and visual consistency in the Power BI dashboard. 
 
@@ -375,7 +365,7 @@ Numeric and date columns were in correct data types, ready for merging (via pd.m
 
 Code: 
 
-# Save cleaned outputs 
+Save cleaned outputs 
 
 df.to_csv('cleaned_games.csv', index=False)  
 
